@@ -34,7 +34,6 @@ class QuanLySinhVien:
 
     def Xuat_danh_sach_sinh_vien(self):
         pass
-
     def xuat_dssv_gioi(self):
         pass
 
