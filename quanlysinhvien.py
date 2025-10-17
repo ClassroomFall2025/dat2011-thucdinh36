@@ -1,41 +1,51 @@
-import sinhvienpoly as svpl
+from sinhvienpoly import *
 
 class QuanLySinhVien:
-    # khởi tạo danh sách sinh viên ban đầu rỗng
     def __init__(self):
         self.dssv = []
 
-    # phương thức nhập danh sách sinh viên
-    def nhap_danh_sach_sinh_vien(self):
+    def nhap_dssv(self):
         while True:
-            ho_ten_sv = input("Nhập họ tên sinh viên: ")
-            nganh_hoc = input("Nhập ngành học sinh viên: ")
+            ho_ten = input("Nhập họ tên sinh viên (hoặc '0' để dừng): ")
+            if ho_ten == "0":
+                print("Kết thúc nhập.")
+                break
 
-            if nganh_hoc.lower() == "it":
+            nganh = input("Nhập ngành học (IT/Biz): ").strip().lower()
+            if nganh == "it":
                 java = float(input("Điểm Java: "))
                 html = float(input("Điểm HTML: "))
                 css = float(input("Điểm CSS: "))
-                sv = svpl.SinhVienIT(ho_ten_sv, nganh_hoc, java, html, css)
-                self.dssv.append(sv)
-
-            elif nganh_hoc.lower() == "biz":
+                sv = SinhVienIT(ho_ten, java, html, css)
+            elif nganh == "biz":
                 marketing = float(input("Điểm Marketing: "))
                 sales = float(input("Điểm Sales: "))
-                sv = svpl.SinhVienBiz(ho_ten_sv, nganh_hoc, marketing, sales)
-                self.dssv.append(sv)
-            elif nganh_hoc.lower() == "exit":
-                print("Kết thúc nhập thông tin sinh viên.")
-                break
+                sv = SinhVienBiz(ho_ten, marketing, sales)
             else:
-                print("Ngành học không hợp lệ! Vui lòng nhập lại.")
+                print("Ngành không hợp lệ, vui lòng nhập lại.")
+                continue
 
-        return self.dssv
-   
+            self.dssv.append(sv)
 
-    def Xuat_danh_sach_sinh_vien(self):
-        pass
+    def xuat_dssv(self):
+        if not self.dssv:
+            print("Danh sách trống.")
+        else:
+            print("\n--- DANH SÁCH SINH VIÊN ---")
+            for sv in self.dssv:
+               sv.xuat()
+
     def xuat_dssv_gioi(self):
-        pass
+        sv_gioi = [sv for sv in self.dssv if sv.get_diem() >= 8]
+        if not sv_gioi:
+            print("Không có sinh viên giỏi.")
+        else:
+            print("\n--- SINH VIÊN CÓ HỌC LỰC GIỎI ---")
+            for sv in sv_gioi:
+                sv.xuat()
 
     def sap_xep_dssv(self):
-        pass
+        self.dssv.sort(key=lambda sv: sv.get_diem(), reverse=True)
+        print("Đã sắp xếp danh sách sinh viên theo điểm giảm dần.")
+        for sv in self.dssv:
+                sv.xuat()

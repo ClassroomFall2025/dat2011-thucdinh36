@@ -1,50 +1,46 @@
 class SinhVienPoly:
-    def __init__(self, ho_ten, nganh):
+    def __init__(self, ho_ten, nganh_hoc):
         self.ho_ten = ho_ten
-        self.nganh = nganh
+        self.nganh_hoc = nganh_hoc
 
-    # Phương thức trừu tượng (chưa có cách tính)
     def get_diem(self):
         pass
 
-    # Tự động xếp học lực dựa trên điểm
     def get_hoc_luc(self):
         diem = self.get_diem()
-        if diem < 5:
-            return "Yếu"
-        elif diem < 7:
-            return "Trung bình"
-        elif diem < 8:
-            return "Khá"
-        elif diem < 9:
-            return "Giỏi"
-        else:
+        if 9 <= diem <= 10:
             return "Xuất sắc"
+        elif diem >= 8:
+            return "Giỏi"
+        elif diem >= 7:
+            return "Khá"
+        elif diem >= 5:
+            return "Trung bình"
+        else:
+            return "Yếu"
 
-    # Xuất thông tin sinh viên
+    def __str__(self):
+        return f"{self.ho_ten}, {self.nganh_hoc}, Điểm TB: {self.get_diem():.2f}, Học lực: {self.get_hoc_luc()}"
     def xuat(self):
-        print(f"Họ tên: {self.ho_ten}, Ngành: {self.nganh}, "
-              f"Điểm: {self.get_diem():.2f}, Học lực: {self.get_hoc_luc()}")
+        print(f"{self.ho_ten}, {self.nganh_hoc}, Điểm TB: {self.get_diem():.2f}, Học lực: {self.get_hoc_luc()}")
 
 
-# Lớp SinhVienIT kế thừa SinhVienPoly
 class SinhVienIT(SinhVienPoly):
-    def __init__(self, ho_ten, nganh, java, html, css):
-        super().__init__(ho_ten, nganh)
-        self.java = java
-        self.html = html
-        self.css = css
+    def __init__(self, ho_ten, diem_java, diem_html, diem_css):
+        super().__init__(ho_ten, "IT")
+        self.diem_java = diem_java
+        self.diem_html = diem_html
+        self.diem_css = diem_css
 
     def get_diem(self):
-        return (2 * self.java + self.html + self.css) / 4
+        return (self.diem_java * 2 + self.diem_html + self.diem_css) / 4
 
 
-# Lớp SinhVienBiz kế thừa SinhVienPoly
 class SinhVienBiz(SinhVienPoly):
-    def __init__(self, ho_ten, nganh, marketing, sales):
-        super().__init__(ho_ten, nganh)
-        self.marketing = marketing
-        self.sales = sales
+    def __init__(self, ho_ten, diem_marketing, diem_sales):
+        super().__init__(ho_ten, "Biz")
+        self.diem_marketing = diem_marketing
+        self.diem_sales = diem_sales
 
     def get_diem(self):
-        return (2 * self.marketing + self.sales) / 3
+        return (self.diem_marketing * 2 + self.diem_sales) / 3
